@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<h2>My Wishlist ❤️</h2>
+
+<div class="row">
+
+{% for item in items %}
+
+<div class="col-md-3">
+
+<div class="card">
+
+<img src="{{ item.product.image.url }}" class="card-img-top">
+
+<div class="card-body">
+
+<h5>{{ item.product.name }}</h5>
+
+<p>₹{{ item.product.price }}</p>
+
+<a href="{% url 'remove_from_wishlist' item.product.id %}"
+onclick="return confirm('Remove this product from wishlist?')"
+class="btn btn-danger">
+Remove
+</a>
+
+<a href="{% url 'add_to_cart' item.product.id %}" 
+class="btn btn-success">
+Add to Cart
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<p>No items in wishlist</p>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+{% endblock %}

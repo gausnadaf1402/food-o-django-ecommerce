@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="col-md-6 mx-auto">
+
+<h2 class="mb-4">Register</h2>
+{% if form.errors %}
+<div class="alert alert-danger">
+{{ form.errors }}
+</div>
+{% endif %}
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="mb-3">
+<label>Username</label>
+{{ form.username }}
+</div>
+
+<div class="mb-3">
+<label>Email</label>
+{{ form.email }}
+</div>
+
+<div class="mb-3 position-relative">
+<label>Password</label>
+{{ form.password1 }}
+<span onclick="togglePassword('id_password1', this)"
+      style="position:absolute; right:10px; top:32px; cursor:pointer;">
+👁
+</span>
+</div>
+
+<div class="mb-3 position-relative">
+<label>Confirm Password</label>
+{{ form.password2 }}
+<span onclick="togglePassword('id_password2', this)"
+      style="position:absolute; right:10px; top:32px; cursor:pointer;">
+👁
+</span>
+</div>
+
+<button class="btn btn-success w-100">Register</button>
+
+</form>
+
+<p class="mt-3 text-center">
+
+Already have an account?
+
+<a href="/login/">Login</a>
+
+</p>
+
+</div>
+
+<script>
+
+function togglePassword(fieldId, icon){
+
+    var input = document.getElementById(fieldId);
+
+    if(input.type === "password"){
+        input.type = "text";
+        icon.innerHTML = "🙈";
+    }else{
+        input.type = "password";
+        icon.innerHTML = "👁";
+    }
+
+}
+
+</script>
+{% endblock %}

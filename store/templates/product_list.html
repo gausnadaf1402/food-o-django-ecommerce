@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% comment %} <h2 class="mb-4">Dry Fruits</h2> {% endcomment %}
+
+<div class="p-5 mb-4 bg-light rounded-3 shadow-sm">
+
+<div class="container text-center">
+
+<h1 class="display-5 fw-bold">Premium Dry Fruits</h1>
+
+<p class="lead">
+Fresh almonds, cashews, pistachios delivered to your home
+</p>
+
+<a href="/" class="btn btn-success btn-lg">
+Shop Now
+</a>
+
+</div>
+
+</div>
+
+{% if user.is_staff %}
+<a href="/add-product/" class="btn btn-primary mb-3">Add Product</a>
+{% endif %}
+
+<div class="row">
+
+{% for product in products %}
+
+<div class="col-md-3">
+
+<div class="card mb-4">
+
+<img src="{{ product.image.url }}" class="card-img-top">
+
+<div class="card-body">
+
+<h5>{{ product.name }}</h5>
+
+<p>₹{{ product.price }}</p>
+
+<a href="/product/{{product.id}}" class="btn btn-success">View</a>
+
+{% if user.is_staff %}
+<a href="/edit-product/{{product.id}}" class="btn btn-warning">Edit</a>
+<a href="/delete-product/{{product.id}}" class="btn btn-danger">Delete</a>
+{% endif %}
+
+{% if not user.is_staff%}
+<a href="{% url 'add_to_wishlist' product.id %}"
+onclick="showWishlistToast('{{product.name}}')"
+class="btn btn-outline-danger">
+❤️ Wishlist
+</a>
+{% endif %}
+
+</div>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
