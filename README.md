@@ -17,6 +17,6 @@ A full-stack e-commerce web application built using Django.
 
 - Python
 - Django
-- SQLite
+- PostgreSQL
 - Bootstrap
 - HTML/CSS
