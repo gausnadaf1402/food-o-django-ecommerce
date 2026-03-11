@@ -235,3 +235,36 @@ def wishlist(request):
     items = Wishlist.objects.filter(user=request.user)
 
     return render(request, 'wishlist.html', {'items': items})
+
+
+def payment_success(request):
+
+    cart_items = Cart.objects.filter(user=request.user)
+
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
+
+    order = Order.objects.create(
+        user=request.user,
+        total_price=total_price
+    )
+
+    for item in cart_items:
+        OrderItem.objects.create(
+            order=order,
+            product=item.product,
+            quantity=item.quantity
+        )
+
+    cart_items.delete()
+
+    return redirect('/orders/')
+
+def payment_page(request):
+
+    cart_items = Cart.objects.filter(user=request.user)
+
+    total = sum(item.product.price for item in cart_items)
+
+    return render(request, "payment.html", {
+        "total": total
+    })
